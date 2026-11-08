@@ -85,12 +85,12 @@ Dependency direction (enforced by `pnpm depcruise`):
 - **Two validation stages.** Structure errors block import. Readiness problems (for example an unconnected input) are warnings on import and errors on run, so unfinished circuits can still be opened.
 - **Cancellation = terminate and restart the worker** after 5 s (BRL-22). A synchronous evaluation cannot be interrupted from inside the worker.
 
-## Deploy (Vercel → https://logic.kanaksan.com)
+## Deploy (Vercel → https://logiclab.kanaksan.com)
 
 - `vercel.json` holds the build settings (pnpm monorepo, output `apps/web/dist`) and the security headers (CSP, HSTS, no framing).
 - `pnpm build && pnpm preview:prod` serves the build locally **with the same headers**; run `pnpm e2e` against it before a release.
 - CSP keeps `'unsafe-eval'` only because Ajv compiles validators at runtime (Import/Export). Switching to Ajv standalone validators (R1, LL-064) removes it.
-- Domain: `logic.kanaksan.com` → CNAME `cname.vercel-dns.com` at name.com.
+- Domain: `logiclab.kanaksan.com` → CNAME `cname.vercel-dns.com` at name.com.
 
 ## Next (R1 slices)
 

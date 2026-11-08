@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://logic.kanaksan.com/sitemap.xml
+Sitemap: https://logiclab.kanaksan.com/sitemap.xml
