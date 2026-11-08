@@ -1,0 +1,515 @@
+{
+  "registryId": "logiclab.builtin",
+  "registryVersion": "1.0",
+  "description": "LogicLab R1 (MVP) built-in component definitions. Each entry conforms to component-definition-1.0.schema.json. Published versions are immutable.",
+  "pinNamingConvention": "Gate inputs a, b (NOT: a); gate output y; sources out; sinks in.",
+  "definitions": [
+    {
+      "definitionId": "io.input",
+      "version": "1.0",
+      "name": "Input Switch",
+      "category": "INPUT",
+      "description": "User-controlled binary source. The user can toggle it while the simulation runs.",
+      "pins": [
+        {
+          "pinId": "out",
+          "name": "Out",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.io.input",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "initialValue": {
+            "type": "string",
+            "enum": ["0", "1"],
+            "default": "0",
+            "description": "Value when the circuit is opened or reset."
+          }
+        }
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.io.switch",
+        "width": 40,
+        "height": 40,
+        "pinLayout": {
+          "out": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "io.constant",
+      "version": "1.0",
+      "name": "Constant",
+      "category": "CONSTANT",
+      "description": "Fixed binary source (always 0 or always 1). Not toggled during simulation.",
+      "pins": [
+        {
+          "pinId": "out",
+          "name": "Out",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.io.constant",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["value"],
+        "properties": {
+          "value": {
+            "type": "string",
+            "enum": ["0", "1"],
+            "description": "The fixed output value."
+          }
+        }
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.io.constant",
+        "width": 30,
+        "height": 30,
+        "pinLayout": {
+          "out": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "io.output",
+      "version": "1.0",
+      "name": "Output Indicator",
+      "category": "OUTPUT",
+      "description": "Shows the value of the connected signal as text (0/1) and as a light.",
+      "pins": [
+        {
+          "pinId": "in",
+          "name": "In",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.io.output",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.io.indicator",
+        "width": 40,
+        "height": 40,
+        "pinLayout": {
+          "in": {
+            "side": "LEFT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "logic.not",
+      "version": "1.0",
+      "name": "NOT",
+      "category": "LOGIC_GATE",
+      "description": "Inverter. y = NOT a.",
+      "pins": [
+        {
+          "pinId": "a",
+          "name": "A",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "y",
+          "name": "Y",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.logic.not",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.logic.not",
+        "width": 60,
+        "height": 40,
+        "pinLayout": {
+          "a": {
+            "side": "LEFT",
+            "offset": 0.5
+          },
+          "y": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "logic.and",
+      "version": "1.0",
+      "name": "AND",
+      "category": "LOGIC_GATE",
+      "description": "Two-input AND gate. y = a AND b.",
+      "pins": [
+        {
+          "pinId": "a",
+          "name": "A",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "b",
+          "name": "B",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "y",
+          "name": "Y",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.logic.and",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.logic.and",
+        "width": 60,
+        "height": 40,
+        "pinLayout": {
+          "a": {
+            "side": "LEFT",
+            "offset": 0.25
+          },
+          "b": {
+            "side": "LEFT",
+            "offset": 0.75
+          },
+          "y": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "logic.or",
+      "version": "1.0",
+      "name": "OR",
+      "category": "LOGIC_GATE",
+      "description": "Two-input OR gate. y = a OR b.",
+      "pins": [
+        {
+          "pinId": "a",
+          "name": "A",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "b",
+          "name": "B",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "y",
+          "name": "Y",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.logic.or",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.logic.or",
+        "width": 60,
+        "height": 40,
+        "pinLayout": {
+          "a": {
+            "side": "LEFT",
+            "offset": 0.25
+          },
+          "b": {
+            "side": "LEFT",
+            "offset": 0.75
+          },
+          "y": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "logic.nand",
+      "version": "1.0",
+      "name": "NAND",
+      "category": "LOGIC_GATE",
+      "description": "Two-input NAND gate. y = NOT (a AND b).",
+      "pins": [
+        {
+          "pinId": "a",
+          "name": "A",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "b",
+          "name": "B",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "y",
+          "name": "Y",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.logic.nand",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.logic.nand",
+        "width": 60,
+        "height": 40,
+        "pinLayout": {
+          "a": {
+            "side": "LEFT",
+            "offset": 0.25
+          },
+          "b": {
+            "side": "LEFT",
+            "offset": 0.75
+          },
+          "y": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "logic.nor",
+      "version": "1.0",
+      "name": "NOR",
+      "category": "LOGIC_GATE",
+      "description": "Two-input NOR gate. y = NOT (a OR b).",
+      "pins": [
+        {
+          "pinId": "a",
+          "name": "A",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "b",
+          "name": "B",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "y",
+          "name": "Y",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.logic.nor",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.logic.nor",
+        "width": 60,
+        "height": 40,
+        "pinLayout": {
+          "a": {
+            "side": "LEFT",
+            "offset": 0.25
+          },
+          "b": {
+            "side": "LEFT",
+            "offset": 0.75
+          },
+          "y": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "logic.xor",
+      "version": "1.0",
+      "name": "XOR",
+      "category": "LOGIC_GATE",
+      "description": "Two-input XOR gate. y = a XOR b.",
+      "pins": [
+        {
+          "pinId": "a",
+          "name": "A",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "b",
+          "name": "B",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "y",
+          "name": "Y",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.logic.xor",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.logic.xor",
+        "width": 60,
+        "height": 40,
+        "pinLayout": {
+          "a": {
+            "side": "LEFT",
+            "offset": 0.25
+          },
+          "b": {
+            "side": "LEFT",
+            "offset": 0.75
+          },
+          "y": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    },
+    {
+      "definitionId": "logic.xnor",
+      "version": "1.0",
+      "name": "XNOR",
+      "category": "LOGIC_GATE",
+      "description": "Two-input XNOR gate. y = NOT (a XOR b).",
+      "pins": [
+        {
+          "pinId": "a",
+          "name": "A",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "b",
+          "name": "B",
+          "direction": "INPUT",
+          "width": 1,
+          "required": true
+        },
+        {
+          "pinId": "y",
+          "name": "Y",
+          "direction": "OUTPUT",
+          "width": 1,
+          "required": true
+        }
+      ],
+      "simulationModelId": "model.logic.xnor",
+      "simulationModelVersion": "1.0",
+      "parameterSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "visualMetadata": {
+        "symbolId": "symbol.logic.xnor",
+        "width": 60,
+        "height": 40,
+        "pinLayout": {
+          "a": {
+            "side": "LEFT",
+            "offset": 0.25
+          },
+          "b": {
+            "side": "LEFT",
+            "offset": 0.75
+          },
+          "y": {
+            "side": "RIGHT",
+            "offset": 0.5
+          }
+        }
+      },
+      "status": "ACTIVE"
+    }
+  ]
+}

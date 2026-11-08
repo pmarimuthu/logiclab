@@ -1,0 +1,12 @@
+{
+  "name": "@logiclab/test-fixtures",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@logiclab/circuit-domain": "workspace:*"
+  }
+}

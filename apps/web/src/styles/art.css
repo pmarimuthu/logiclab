@@ -1,0 +1,172 @@
+.gate-symbol {
+  width: 120px;
+  height: 82px;
+}
+
+.gate-shape path,
+.gate-shape circle {
+  fill: #fff;
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.gate-name {
+  font-size: 13px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: var(--ink);
+}
+
+.stub {
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.wire {
+  stroke-width: 3;
+}
+
+.wire.on {
+  stroke: var(--on);
+  stroke-width: 5;
+}
+
+.wire.off,
+.wire.unknown {
+  stroke: var(--off);
+  stroke-dasharray: 7 5;
+}
+
+.wire-value {
+  font:
+    700 14px ui-monospace,
+    monospace;
+  fill: var(--ink);
+}
+
+.input-box rect {
+  fill: #fff;
+  stroke: var(--off);
+  stroke-width: 2;
+}
+
+.input-box.on rect {
+  fill: #eef6f1;
+  stroke: var(--on);
+  stroke-width: 3;
+}
+
+.box-label {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.box-value {
+  font-size: 12px;
+  fill: #3a4452;
+}
+
+.lamp-big {
+  fill: #fff;
+  stroke: var(--off);
+  stroke-width: 3;
+}
+
+.lamp-big.on {
+  fill: #f5c518;
+  stroke: #b38a00;
+}
+
+.lamp-value,
+.lamp-label,
+.lamp-meaning {
+  text-anchor: middle;
+}
+
+.lamp-value {
+  font:
+    700 18px ui-monospace,
+    monospace;
+}
+
+.lamp-label {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.lamp-meaning {
+  font-size: 12px;
+  fill: #3a4452;
+}
+
+.locker-frame {
+  fill: #6b7480;
+  stroke: #3d4550;
+  stroke-width: 2;
+}
+
+.locker-door {
+  stroke: #4b5563;
+  stroke-width: 2;
+}
+
+.locker-inside {
+  fill: #1f2630;
+}
+
+.number-plate {
+  fill: #e2c15f;
+  stroke: #8a6d0b;
+}
+
+.number-text {
+  font:
+    700 10px ui-monospace,
+    monospace;
+  text-anchor: middle;
+  fill: #3d2f05;
+}
+
+.locker-handle,
+.hinge {
+  fill: #2f3640;
+}
+
+.escutcheon {
+  fill: #d9b23c;
+  stroke: #8a6d0b;
+  stroke-width: 1.5;
+}
+
+.slot circle,
+.slot rect {
+  fill: #1f2630;
+}
+
+.key rect,
+.key circle {
+  fill: #e8c547;
+  stroke: #8a6d0b;
+  stroke-width: 1.5;
+}
+
+.key .key-hole {
+  fill: #b4bcc6;
+}
+
+.locker-key-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: #1f2630;
+}
+
+.deposit-box {
+  fill: #9aa3ad;
+  stroke: #4b5563;
+}
+
+.gold {
+  fill: #f2c230;
+  stroke: #a07800;
+}

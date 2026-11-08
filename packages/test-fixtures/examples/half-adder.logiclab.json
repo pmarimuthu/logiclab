@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "1.0",
+  "metadata": {
+    "documentId": "doc-half-adder-001",
+    "name": "Half Adder",
+    "description": "SUM is A XOR B; CARRY is A AND B."
+  },
+  "model": {
+    "circuitId": "circuit-half-adder-001",
+    "name": "Half Adder",
+    "instances": [
+      {
+        "instanceId": "input-a",
+        "definition": {
+          "definitionId": "io.input",
+          "version": "1.0"
+        },
+        "parameters": {
+          "initialValue": "0"
+        }
+      },
+      {
+        "instanceId": "input-b",
+        "definition": {
+          "definitionId": "io.input",
+          "version": "1.0"
+        },
+        "parameters": {
+          "initialValue": "0"
+        }
+      },
+      {
+        "instanceId": "xor-1",
+        "definition": {
+          "definitionId": "logic.xor",
+          "version": "1.0"
+        },
+        "parameters": {}
+      },
+      {
+        "instanceId": "and-1",
+        "definition": {
+          "definitionId": "logic.and",
+          "version": "1.0"
+        },
+        "parameters": {}
+      },
+      {
+        "instanceId": "sum-out",
+        "definition": {
+          "definitionId": "io.output",
+          "version": "1.0"
+        },
+        "parameters": {}
+      },
+      {
+        "instanceId": "carry-out",
+        "definition": {
+          "definitionId": "io.output",
+          "version": "1.0"
+        },
+        "parameters": {}
+      }
+    ],
+    "nets": [
+      {
+        "netId": "net-a",
+        "width": 1,
+        "endpoints": [
+          {
+            "instanceId": "input-a",
+            "pinId": "out"
+          },
+          {
+            "instanceId": "xor-1",
+            "pinId": "a"
+          },
+          {
+            "instanceId": "and-1",
+            "pinId": "a"
+          }
+        ]
+      },
+      {
+        "netId": "net-b",
+        "width": 1,
+        "endpoints": [
+          {
+            "instanceId": "input-b",
+            "pinId": "out"
+          },
+          {
+            "instanceId": "xor-1",
+            "pinId": "b"
+          },
+          {
+            "instanceId": "and-1",
+            "pinId": "b"
+          }
+        ]
+      },
+      {
+        "netId": "net-sum",
+        "width": 1,
+        "endpoints": [
+          {
+            "instanceId": "xor-1",
+            "pinId": "y"
+          },
+          {
+            "instanceId": "sum-out",
+            "pinId": "in"
+          }
+        ]
+      },
+      {
+        "netId": "net-carry",
+        "width": 1,
+        "endpoints": [
+          {
+            "instanceId": "and-1",
+            "pinId": "y"
+          },
+          {
+            "instanceId": "carry-out",
+            "pinId": "in"
+          }
+        ]
+      }
+    ],
+    "ports": []
+  },
+  "layout": {
+    "componentPositions": {
+      "input-a": {
+        "x": 60,
+        "y": 90
+      },
+      "input-b": {
+        "x": 60,
+        "y": 220
+      },
+      "xor-1": {
+        "x": 300,
+        "y": 90
+      },
+      "and-1": {
+        "x": 300,
+        "y": 220
+      },
+      "sum-out": {
+        "x": 540,
+        "y": 90
+      },
+      "carry-out": {
+        "x": 540,
+        "y": 220
+      }
+    },
+    "netRoutes": {}
+  }
+}

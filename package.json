@@ -1,0 +1,39 @@
+{
+  "name": "logiclab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "gen:types": "node tools/generate-types.mjs",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "node tools/typecheck.mjs",
+    "depcruise": "depcruise apps packages --config .dependency-cruiser.cjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "contracts:check": "python3 tools/check_contracts.py contracts/schemas/component-definition-1.0.schema.json contracts/schemas/circuit-document-1.0.schema.json contracts/registry/mvp-component-definitions-1.0.json packages/test-fixtures/examples/and-gate.logiclab.json packages/test-fixtures/examples/half-adder.logiclab.json",
+    "build": "pnpm --filter @logiclab/web build",
+    "dev": "pnpm --filter @logiclab/web dev",
+    "e2e": "playwright test",
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm depcruise && pnpm test && pnpm build",
+    "preview:prod": "node tools/serve-dist.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.0",
+    "@types/node": "26.6.6",
+    "dependency-cruiser": "18.7.2",
+    "eslint": "10.14.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.14.0",
+    "json-schema-to-typescript": "16.0.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vitest": "5.1.0"
+  }
+}

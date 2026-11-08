@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://logiclab.example/schemas/circuit-document-1.0.schema.json",
+  "title": "LogicLab Circuit Document 1.0",
+  "description": "Portable LogicLab circuit document. Semantic validation (unique IDs, pin direction, driver count, graph cycles, component resolution, and the rule that endpoints plus attached circuit ports must be at least 2 per net) is performed by the application in addition to this structural schema. Revision 1.0-r2 (BRD v1.1, gap G-09): net endpoints minItems lowered from 2 to 1 so that a net fed by a circuit INPUT port can have a single instance endpoint.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "metadata", "model", "layout"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "metadata": { "$ref": "#/$defs/metadata" },
+    "model": { "$ref": "#/$defs/circuitModel" },
+    "layout": { "$ref": "#/$defs/layout" }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["documentId", "name"],
+      "properties": {
+        "documentId": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 4000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "modifiedAt": { "type": "string", "format": "date-time" },
+        "tags": {
+          "type": "array",
+          "maxItems": 30,
+          "items": { "type": "string", "maxLength": 40 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "definitionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definitionId", "version"],
+      "properties": {
+        "definitionId": { "$ref": "#/$defs/id" },
+        "version": { "type": "string", "minLength": 1, "maxLength": 40 }
+      }
+    },
+    "parameterValue": { "type": ["string", "number", "boolean"] },
+    "instance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instanceId", "definition", "parameters"],
+      "properties": {
+        "instanceId": { "$ref": "#/$defs/id" },
+        "definition": { "$ref": "#/$defs/definitionRef" },
+        "label": { "type": "string", "maxLength": 120 },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/parameterValue" }
+        }
+      }
+    },
+    "endpoint": {
+      "description": "A component instance pin. Circuit boundary ports are NOT endpoints; a port refers to its net through port.netId.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instanceId", "pinId"],
+      "properties": {
+        "instanceId": { "$ref": "#/$defs/id" },
+        "pinId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "net": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["netId", "width", "endpoints"],
+      "properties": {
+        "netId": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "maxLength": 120 },
+        "width": { "type": "integer", "minimum": 1, "maximum": 1024 },
+        "endpoints": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/endpoint" }
+        }
+      }
+    },
+    "port": {
+      "description": "Public interface of the circuit. An INPUT port drives its net; an OUTPUT port observes its net.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["portId", "name", "direction", "width", "netId"],
+      "properties": {
+        "portId": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "direction": { "enum": ["INPUT", "OUTPUT"] },
+        "width": { "type": "integer", "minimum": 1, "maximum": 1024 },
+        "netId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["circuitId", "version"],
+      "properties": {
+        "circuitId": { "$ref": "#/$defs/id" },
+        "version": { "type": "string", "minLength": 1, "maxLength": 40 }
+      }
+    },
+    "circuitModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["circuitId", "name", "instances", "nets", "ports"],
+      "properties": {
+        "circuitId": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 4000 },
+        "instances": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": { "$ref": "#/$defs/instance" }
+        },
+        "nets": { "type": "array", "maxItems": 20000, "items": { "$ref": "#/$defs/net" } },
+        "ports": { "type": "array", "maxItems": 2048, "items": { "$ref": "#/$defs/port" } },
+        "dependencies": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": { "$ref": "#/$defs/dependency" }
+        }
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number", "minimum": -1000000, "maximum": 1000000 },
+        "y": { "type": "number", "minimum": -1000000, "maximum": 1000000 }
+      }
+    },
+    "position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number", "minimum": -1000000, "maximum": 1000000 },
+        "y": { "type": "number", "minimum": -1000000, "maximum": 1000000 },
+        "rotation": { "type": "number", "minimum": -360, "maximum": 360 }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentPositions", "netRoutes"],
+      "properties": {
+        "componentPositions": {
+          "type": "object",
+          "maxProperties": 10000,
+          "additionalProperties": { "$ref": "#/$defs/position" }
+        },
+        "netRoutes": {
+          "type": "object",
+          "maxProperties": 20000,
+          "additionalProperties": {
+            "type": "array",
+            "maxItems": 1000,
+            "items": { "$ref": "#/$defs/point" }
+          }
+        },
+        "viewport": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "zoom": { "type": "number", "exclusiveMinimum": 0, "maximum": 10 }
+          }
+        }
+      }
+    }
+  }
+}

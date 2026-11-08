@@ -1,0 +1,19 @@
+{
+  "name": "@logiclab/circuit-serialization",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@logiclab/circuit-domain": "workspace:*",
+    "@logiclab/contracts": "workspace:*",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  },
+  "devDependencies": {
+    "@logiclab/component-registry": "workspace:*",
+    "@logiclab/test-fixtures": "workspace:*"
+  }
+}

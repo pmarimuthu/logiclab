@@ -1,0 +1,446 @@
+.scene text {
+  font-family: system-ui, 'Segoe UI', sans-serif;
+}
+
+.scene-label,
+.scene-title,
+.scene-shout,
+.big-digit,
+.gate-box-text,
+.quiet-text,
+.answer-text,
+.table-head,
+.table-cell {
+  text-anchor: middle;
+}
+
+.scene-label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: #1f2630;
+}
+
+.scene-label.start,
+.scene-shout.start {
+  text-anchor: start;
+}
+
+.scene-title {
+  font-size: 18px;
+  font-weight: 800;
+  fill: #1f2630;
+}
+
+.scene-shout {
+  font-size: 13px;
+  font-weight: 800;
+  fill: #c2410c;
+}
+
+.scene-wall,
+.paper {
+  fill: #f6f8fb;
+}
+
+.sky-day {
+  fill: #cfe8fb;
+}
+
+.sky-night {
+  fill: #1e2a4a;
+}
+
+.ground {
+  fill: #9bc77a;
+}
+
+.road {
+  fill: #4b5563;
+}
+
+.fence,
+.post {
+  fill: #b07a45;
+}
+
+.roof {
+  fill: #c2410c;
+}
+
+.wall {
+  fill: #fde7c3;
+  stroke: #b07a45;
+}
+
+.window {
+  fill: #bfe0f5;
+  stroke: #6b7480;
+}
+
+.door {
+  fill: #8b5a2b;
+}
+
+.knob {
+  fill: #f2c230;
+}
+
+.push {
+  fill: #e5e7eb;
+  stroke: #4b5563;
+  stroke-width: 2;
+}
+
+.push.on {
+  fill: #ef4444;
+  stroke: #991b1b;
+}
+
+.bell path,
+.bell circle {
+  fill: #c9a227;
+  stroke: #7a5f0d;
+}
+
+.bell.ringing path {
+  fill: #f2c230;
+}
+
+.waves path {
+  fill: none;
+  stroke: #c2410c;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.sun circle,
+.sun rect {
+  fill: #f5b301;
+}
+
+.moon circle {
+  fill: #f4f1d0;
+}
+
+.moon .sky-night {
+  fill: #1e2a4a;
+}
+
+.star {
+  fill: #fff;
+}
+
+.pole,
+.arm {
+  fill: #4b5563;
+  stroke: #4b5563;
+  stroke-width: 4;
+}
+
+.arm {
+  fill: none;
+}
+
+.lamp-head {
+  fill: #6b7480;
+}
+
+.lamp-head.on {
+  fill: #fde047;
+}
+
+.beam {
+  fill: rgba(253, 224, 71, 0.45);
+}
+
+.sensor {
+  fill: #e5e7eb;
+  stroke: #4b5563;
+}
+
+.sensor-eye {
+  fill: #6b7480;
+}
+
+.sensor-eye.on {
+  fill: #f5b301;
+}
+
+.car-inside,
+.classroom {
+  fill: #eef2f6;
+}
+
+.dashboard {
+  fill: #2f3640;
+}
+
+.warning circle {
+  fill: #6b7480;
+}
+
+.warning.on circle {
+  fill: #dc2626;
+}
+
+.warning .icon {
+  fill: #fff;
+}
+
+.warning .icon-line {
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.dash-text {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.dash-text.warn {
+  fill: #fca5a5;
+}
+
+.dash-text.safe {
+  fill: #86efac;
+}
+
+.scene-label.on-dark {
+  fill: #fff;
+}
+
+.seat {
+  fill: #64748b;
+}
+
+.skin {
+  fill: #c68b59;
+}
+
+.shirt {
+  fill: #2563eb;
+}
+
+.belt {
+  stroke: #9ca3af;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.belt.on {
+  stroke: #111827;
+}
+
+.arm-line {
+  stroke: #c68b59;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.desk {
+  fill: #a16207;
+}
+
+.quiet {
+  fill: #9ca3af;
+}
+
+.quiet.on {
+  fill: #16a34a;
+}
+
+.quiet-text {
+  font-size: 14px;
+  font-weight: 800;
+  fill: #fff;
+}
+
+.room-lit {
+  fill: #fff7d6;
+}
+
+.room-dark {
+  fill: #3b4252;
+}
+
+.stairs {
+  fill: #b08968;
+  stroke: #7f5539;
+}
+
+.bulb-wire {
+  stroke: #4b5563;
+  stroke-width: 2;
+}
+
+.bulb {
+  fill: #e5e7eb;
+  stroke: #6b7480;
+  stroke-width: 2;
+}
+
+.bulb.on {
+  fill: #fde047;
+  stroke: #b38a00;
+}
+
+.bulb-glow {
+  fill: rgba(253, 224, 71, 0.35);
+}
+
+.bulb-base {
+  fill: #6b7480;
+}
+
+.big-digit {
+  font:
+    800 28px ui-monospace,
+    monospace;
+  fill: #1f2630;
+}
+
+.switch-plate {
+  fill: #f8fafc;
+  stroke: #6b7480;
+}
+
+.switch-knob {
+  fill: #1f2630;
+}
+
+.room-dark .scene-label,
+.room-dark ~ g .scene-label {
+  fill: #fff;
+}
+
+.card {
+  fill: #fff;
+  stroke: #cbd5e1;
+}
+
+.answer.yes {
+  fill: #16a34a;
+}
+
+.answer.no {
+  fill: #ea580c;
+}
+
+.answer-text {
+  font-size: 18px;
+  font-weight: 800;
+  fill: #fff;
+}
+
+.bubble {
+  fill: #fff;
+  stroke: #cbd5e1;
+}
+
+.tick {
+  fill: #d1d5db;
+}
+
+.tick.on {
+  fill: #16a34a;
+}
+
+.tick-mark {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.toggle {
+  fill: #e5e7eb;
+  stroke: #6b7480;
+}
+
+.toggle.on {
+  fill: #bbf7d0;
+  stroke: var(--on);
+}
+
+.toggle-knob {
+  fill: var(--on);
+}
+
+.gate-box {
+  fill: #fff;
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.gate-box-text {
+  font-size: 15px;
+  font-weight: 800;
+  fill: var(--ink);
+}
+
+.device {
+  fill: #e5e7eb;
+  stroke: #4b5563;
+  stroke-width: 2;
+}
+
+.device-dark {
+  fill: #2f3640;
+}
+
+.screen {
+  fill: #93c5fd;
+  stroke: #4b5563;
+}
+
+.slot-dark {
+  fill: #1f2630;
+}
+
+.cash {
+  fill: #86efac;
+}
+
+.signal-red {
+  fill: #ef4444;
+}
+
+.signal-off {
+  fill: #6b7480;
+}
+
+.lift-gap,
+.lift-arrow {
+  stroke: #4b5563;
+  stroke-width: 2;
+  fill: none;
+}
+
+.tag-in {
+  fill: #dbeafe;
+}
+
+.tag-out {
+  fill: #dcfce7;
+}
+
+.table-head {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.table-cell {
+  font:
+    700 14px ui-monospace,
+    monospace;
+}
+
+.table-line {
+  stroke: #94a3b8;
+  stroke-width: 1.5;
+}
+
+.row-highlight {
+  fill: var(--sun);
+}

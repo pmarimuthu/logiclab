@@ -1,0 +1,392 @@
+openapi: 3.1.0
+info:
+  title: LogicLab API
+  version: 1.0.0
+  description: Initial cloud workspace and circuit repository API. Local simulation is performed in the browser worker and is not an API endpoint.
+servers:
+  - url: https://api.logiclab.example/api/v1
+    description: Placeholder production base URL; replace before deployment
+security:
+  - bearerAuth: []
+paths:
+  /component-definitions:
+    get:
+      operationId: listComponentDefinitions
+      security: []
+      summary: List published component definitions
+      parameters:
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: cursor
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+      responses:
+        '200':
+          description: Component definitions
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items: { $ref: '#/components/schemas/ComponentDefinitionSummary' }
+                  nextCursor: { type: [string, 'null'] }
+        '400': { $ref: '#/components/responses/BadRequest' }
+  /component-definitions/{definitionId}/versions/{version}:
+    get:
+      operationId: getComponentDefinitionVersion
+      security: []
+      summary: Retrieve an exact immutable component definition version
+      parameters:
+        - $ref: '#/components/parameters/DefinitionId'
+        - name: version
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Definition
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ComponentDefinition' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /workspaces:
+    get:
+      operationId: listWorkspaces
+      summary: List workspaces accessible to the caller
+      responses:
+        '200':
+          description: Workspaces
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/Workspace' } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    post:
+      operationId: createWorkspace
+      summary: Create a workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WorkspaceCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Workspace' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /projects:
+    get:
+      operationId: listProjects
+      summary: List projects accessible to the caller
+      parameters:
+        - in: query
+          name: workspaceId
+          schema: { type: string }
+        - in: query
+          name: cursor
+          schema: { type: string }
+      responses:
+        '200':
+          description: Projects
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/Project' } }
+                  nextCursor: { type: [string, 'null'] }
+    post:
+      operationId: createProject
+      summary: Create a project in a workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProjectCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Project' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /circuits:
+    post:
+      operationId: createCircuit
+      summary: Create a cloud circuit document
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CircuitCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CircuitResource' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    get:
+      operationId: listCircuits
+      summary: List circuits visible to the caller
+      parameters:
+        - in: query
+          name: projectId
+          schema: { type: string }
+        - in: query
+          name: cursor
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+      responses:
+        '200':
+          description: Circuits
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/CircuitSummary' } }
+                  nextCursor: { type: [string, 'null'] }
+  /circuits/validate:
+    post:
+      operationId: validateCircuit
+      security: []
+      summary: Validate a circuit document without saving it
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '../schemas/circuit-document-1.0.schema.json' }
+      responses:
+        '200':
+          description: Validation result; HTTP 200 means the request was processed, not necessarily that the circuit is valid
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ValidationResult' }
+        '413': { $ref: '#/components/responses/PayloadTooLarge' }
+  /circuits/{circuitId}:
+    get:
+      operationId: getCircuit
+      summary: Retrieve a circuit document
+      parameters:
+        - $ref: '#/components/parameters/CircuitId'
+      responses:
+        '200':
+          description: Circuit resource
+          headers:
+            ETag: { schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CircuitResource' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      operationId: updateCircuit
+      summary: Replace a circuit document using optimistic concurrency
+      parameters:
+        - $ref: '#/components/parameters/CircuitId'
+        - name: If-Match
+          in: header
+          required: true
+          schema: { type: string }
+          description: ETag/revision previously returned by the server
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '../schemas/circuit-document-1.0.schema.json' }
+      responses:
+        '200':
+          description: Updated
+          headers:
+            ETag: { schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CircuitResource' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
+    delete:
+      operationId: deleteCircuit
+      summary: Delete a circuit owned by or shared with the caller with delete permission
+      parameters:
+        - $ref: '#/components/parameters/CircuitId'
+      responses:
+        '204': { description: Deleted }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /lessons:
+    get:
+      operationId: listLessons
+      security: []
+      summary: List published learning content
+      responses:
+        '200':
+          description: Lessons
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/LessonSummary' } }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    CircuitId:
+      name: circuitId
+      in: path
+      required: true
+      schema: { type: string }
+    DefinitionId:
+      name: definitionId
+      in: path
+      required: true
+      schema: { type: string }
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            correlationId: { type: string }
+            details: { type: array, items: { type: object, additionalProperties: true } }
+    ValidationIssue:
+      type: object
+      required: [code, severity, message]
+      properties:
+        code: { type: string }
+        severity: { type: string, enum: [ERROR, WARNING, INFO] }
+        message: { type: string }
+        entityType: { type: string }
+        entityId: { type: string }
+        details: { type: object, additionalProperties: true }
+    ValidationResult:
+      type: object
+      required: [valid, issues]
+      properties:
+        valid: { type: boolean }
+        issues: { type: array, items: { $ref: '#/components/schemas/ValidationIssue' } }
+    ComponentDefinitionSummary:
+      type: object
+      required: [definitionId, version, name, category]
+      properties:
+        definitionId: { type: string }
+        version: { type: string }
+        name: { type: string }
+        category: { type: string }
+    ComponentDefinition:
+      $ref: '../schemas/component-definition-1.0.schema.json'
+    WorkspaceCreate:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 120 }
+        description: { type: string, maxLength: 2000 }
+    Workspace:
+      allOf:
+        - $ref: '#/components/schemas/WorkspaceCreate'
+        - type: object
+          required: [workspaceId, createdAt]
+          properties:
+            workspaceId: { type: string }
+            createdAt: { type: string, format: date-time }
+    ProjectCreate:
+      type: object
+      required: [workspaceId, name]
+      properties:
+        workspaceId: { type: string }
+        name: { type: string, minLength: 1, maxLength: 120 }
+        description: { type: string, maxLength: 2000 }
+    Project:
+      allOf:
+        - $ref: '#/components/schemas/ProjectCreate'
+        - type: object
+          required: [projectId, createdAt]
+          properties:
+            projectId: { type: string }
+            createdAt: { type: string, format: date-time }
+    CircuitCreate:
+      type: object
+      required: [projectId, document]
+      properties:
+        projectId: { type: string }
+        document: { $ref: '../schemas/circuit-document-1.0.schema.json' }
+    CircuitSummary:
+      type: object
+      required: [circuitId, name, revision, updatedAt]
+      properties:
+        circuitId: { type: string }
+        name: { type: string }
+        revision: { type: integer }
+        updatedAt: { type: string, format: date-time }
+    CircuitResource:
+      type: object
+      required: [circuitId, projectId, revision, document, updatedAt]
+      properties:
+        circuitId: { type: string }
+        projectId: { type: string }
+        revision: { type: integer }
+        document: { $ref: '../schemas/circuit-document-1.0.schema.json' }
+        updatedAt: { type: string, format: date-time }
+    LessonSummary:
+      type: object
+      required: [lessonId, title, difficulty]
+      properties:
+        lessonId: { type: string }
+        title: { type: string }
+        difficulty: { type: string, enum: [BEGINNER, INTERMEDIATE, ADVANCED] }
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NotFound:
+      description: Resource not found or not accessible
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    PayloadTooLarge:
+      description: Request exceeds configured limits
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    PreconditionFailed:
+      description: ETag/revision is stale
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }

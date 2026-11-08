@@ -1,0 +1,11 @@
+{
+  "name": "@logiclab/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./schemas/*": "./schemas/*",
+    "./registry/*": "./registry/*",
+    "./openapi/*": "./openapi/*"
+  }
+}

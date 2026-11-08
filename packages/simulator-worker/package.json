@@ -1,0 +1,17 @@
+{
+  "name": "@logiclab/simulator-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@logiclab/circuit-domain": "workspace:*",
+    "@logiclab/component-registry": "workspace:*",
+    "@logiclab/simulator-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@logiclab/test-fixtures": "workspace:*"
+  }
+}

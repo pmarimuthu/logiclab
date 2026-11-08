@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0",
+  "metadata": {
+    "documentId": "doc-and-001",
+    "name": "AND Gate Example",
+    "description": "Two input switches feeding a two-input AND gate."
+  },
+  "model": {
+    "circuitId": "circuit-and-001",
+    "name": "AND Gate Example",
+    "instances": [
+      {
+        "instanceId": "input-a",
+        "definition": {
+          "definitionId": "io.input",
+          "version": "1.0"
+        },
+        "parameters": {
+          "initialValue": "0"
+        }
+      },
+      {
+        "instanceId": "input-b",
+        "definition": {
+          "definitionId": "io.input",
+          "version": "1.0"
+        },
+        "parameters": {
+          "initialValue": "0"
+        }
+      },
+      {
+        "instanceId": "and-001",
+        "definition": {
+          "definitionId": "logic.and",
+          "version": "1.0"
+        },
+        "parameters": {}
+      },
+      {
+        "instanceId": "output-y",
+        "definition": {
+          "definitionId": "io.output",
+          "version": "1.0"
+        },
+        "parameters": {}
+      }
+    ],
+    "nets": [
+      {
+        "netId": "net-a",
+        "width": 1,
+        "endpoints": [
+          {
+            "instanceId": "input-a",
+            "pinId": "out"
+          },
+          {
+            "instanceId": "and-001",
+            "pinId": "a"
+          }
+        ]
+      },
+      {
+        "netId": "net-b",
+        "width": 1,
+        "endpoints": [
+          {
+            "instanceId": "input-b",
+            "pinId": "out"
+          },
+          {
+            "instanceId": "and-001",
+            "pinId": "b"
+          }
+        ]
+      },
+      {
+        "netId": "net-y",
+        "width": 1,
+        "endpoints": [
+          {
+            "instanceId": "and-001",
+            "pinId": "y"
+          },
+          {
+            "instanceId": "output-y",
+            "pinId": "in"
+          }
+        ]
+      }
+    ],
+    "ports": []
+  },
+  "layout": {
+    "componentPositions": {
+      "input-a": {
+        "x": 80,
+        "y": 90
+      },
+      "input-b": {
+        "x": 80,
+        "y": 210
+      },
+      "and-001": {
+        "x": 300,
+        "y": 150
+      },
+      "output-y": {
+        "x": 520,
+        "y": 150
+      }
+    },
+    "netRoutes": {}
+  }
+}

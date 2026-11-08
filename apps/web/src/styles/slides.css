@@ -1,0 +1,198 @@
+.slides {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.chip-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+}
+
+.chip {
+  flex: none;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.chip.done {
+  background: #eef6f1;
+  border-color: #b9dcc7;
+}
+
+.chip.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.slide-body {
+  min-height: 0;
+  overflow: auto;
+}
+
+.slide {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+  align-content: start;
+}
+
+.slide-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.intro-slide {
+  align-items: center;
+  align-content: center;
+}
+
+.intro-slide h2 {
+  font-size: 1.5rem;
+}
+
+.scene-frame {
+  display: flex;
+  justify-content: center;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 6px;
+}
+
+.scene-frame svg {
+  width: 100%;
+  height: auto;
+  max-height: min(42vh, 330px);
+}
+
+.gate-slide .scene-frame svg {
+  max-height: min(31vh, 240px);
+}
+
+.toggle-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.toggle-row .switch {
+  flex: 1 1 170px;
+}
+
+.result-pill {
+  flex: 1 1 100%;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--sun);
+  font-size: 0.95rem;
+}
+
+.rule-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.rule-row .gate-symbol {
+  flex: none;
+}
+
+.rule {
+  font-weight: 700;
+  background: #eef3fb;
+  border-left: 4px solid var(--focus);
+  padding: 6px 10px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.table-check {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+}
+
+.question {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.option-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.feedback {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.feedback.good {
+  background: #e8f6ee;
+  border: 1px solid #a9d8bb;
+}
+
+.feedback.try {
+  background: #fff4e5;
+  border: 1px solid #f0c98a;
+}
+
+.how-to {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--soft);
+}
+
+.slide-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 760px) {
+  .slide {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    height: auto;
+  }
+
+  .intro-slide h2 {
+    font-size: 1.2rem;
+  }
+
+  .scene-frame svg,
+  .gate-slide .scene-frame svg {
+    max-height: 26vh;
+  }
+
+  .points.big {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .rule-row .gate-symbol {
+    width: 90px;
+    height: 62px;
+  }
+}
